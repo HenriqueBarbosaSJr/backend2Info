@@ -7,6 +7,9 @@ const routes = express.Router();
 routes.get('/',raizControllers.raiz);
 routes.get('/fornecedorcod', fornecControllers.searchFornecedorAllCod);
 routes.get('/fornecedornome', fornecControllers.searchFornecedorAllNome);
+
+routes.get('/fornecedorByNome/:nome', fornecControllers.searchFornecedorByNome);
+
 routes.post('/fornecedor',fornecControllers.create);
 routes.put('/fornecedor/:codfor',fornecControllers.updatefor);
 

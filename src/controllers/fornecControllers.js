@@ -13,6 +13,25 @@ module.exports ={
         return res.status(200).send(result);
     },
 
+    async searchFornecedorByNome(req, res){
+
+            try {
+                    const { nome } = req.params;
+                    if (!nome){
+                        return res.status(400).send({ msg: 'Nome é obrigatório para o filtro.' });
+                    }
+                    const result = await knex('fornecedor')
+                        .where('nome', 'like', `%${nome}%`)
+                        .orderBy('nome');
+                    return res.status(200).send(result);
+                
+            } catch (error) {
+                return res.status(500).send(
+                    { msg: 'Erro ao buscar fornecedor por nome.', error: error.message }
+                );
+            }
+    },
+
     async create(req, res){
         const { nome  } = req.body;
         const { email  } = req.body;
