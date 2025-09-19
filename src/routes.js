@@ -14,6 +14,7 @@ routes.get('/fornecedornome', fornecControllers.searchFornecedorAllNome);
 routes.get('/fornecedorByNome/:nome', fornecControllers.searchFornecedorByNome);
 routes.post('/fornecedor',fornecControllers.create);
 routes.put('/fornecedor/:codfor',fornecControllers.updatefor);
+routes.delete('/fornecedor/:codfor', fornecControllers.deleteFor);
 
 // Rotas da tabela produtos
 routes.get('/produtos',produtosControllers.searchProdutosAllCod);

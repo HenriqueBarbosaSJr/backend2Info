@@ -73,6 +73,36 @@ module.exports ={
                     msg:'Atualização efetuada com sucesso !!!!'
                 }
             );
+    },
+        async deleteFor(req, res){    
+        try {
+            const { codfor } = req.params;
+            if (!codfor) {
+                return res.status(400).send({
+                    msg: 'Código do fornecedor é obrigatório'
+                });
+            }
+
+            const result = await knex('fornecedor').where({codfor});
+            
+            if (result.length > 0){
+                await knex('fornecedor').where({codfor}).del();
+                return res.status(200).send({
+                    msg: 'Exclusão efetuada com sucesso!'
+                });
+            }  
+            
+            return res.status(404).send({
+                msg: 'Fornecedor não encontrado'
+            });
+            
+        } catch (error) {
+            return res.status(500).send({
+                msg: 'Erro ao excluir fornecedor',
+                error: error.message
+            });
+        }
+  
     }
 
 }
