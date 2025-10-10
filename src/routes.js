@@ -21,6 +21,7 @@ routes.get('/produtos',produtosControllers.searchProdutosAllCod);
 
 // Rotas da tabela cliente
 routes.get('/clientes', clientesControllers.searchClientesAllCod);
+routes.post('/clientes', clientesControllers.createClientes);
 
 // Rotas da tabela compras
 routes.get('/compras', comprasControllers.searchComprasAllCod);
