@@ -24,5 +24,6 @@ routes.get('/clientes', clientesControllers.searchClientesAllCod);
 
 // Rotas da tabela compras
 routes.get('/compras', comprasControllers.searchComprasAllCod);
+routes.post('/compras', comprasControllers.createCompras);
 
 module.exports = routes;

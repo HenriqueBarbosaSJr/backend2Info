@@ -74,7 +74,7 @@ module.exports ={
                 }
             );
     },
-        async deleteFor(req, res){    
+    async deleteFor(req, res){    
         try {
             const { codfor } = req.params;
             if (!codfor) {

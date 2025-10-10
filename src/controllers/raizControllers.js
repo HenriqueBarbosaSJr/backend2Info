@@ -1,28 +1,20 @@
-module.exports = {
-    async raiz(req, res){
-        const html = `
-                    <!DOCTYPE html>
-                    <html lang="en">
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Servidor Backend - NodeJs</title>
-                    </head>
-                    <body>
-                        <h2>Olá - este é o servidor do 2 Info</h2>
-                        <h3>Rotas:</h3>
-                        <h3>/ - Rota raiz</h3>
-                        <h3>/fornecedorcod -  get / consulta de fornecedores ordenado por código</h3>
-                        <h3>/fornecedornome - get / consulta de fornecedores ordenado por nome</h3>
-                        <h3>/fornecedor - post / cadastro de fornecedores </h3>
-                        <h3>/fornecedor - put / alteração de fornecedores </h3>
-                        <img src="https://img.icons8.com/?size=100&id=64097&format=png&color=000000" alt="">
-                    </body>
-                    </html>
-                    
-                `;
+const path = require('path');
 
-        return res.send(html);
+module.exports = {
+    raiz(req, res) {
+        /* O método sendFile define o Content-Type automaticamente com base na
+           extensão do arquivo. */
+        const filePath = path.join(__dirname, '..', '..', 'documents', 'api_documentation.html');
+        
+        return res.sendFile(filePath, (err) => {
+            if (err) {
+                console.error('Erro ao enviar o arquivo:', err);
+                res.status(err.status || 500).send({
+                    msg: 'Erro ao carregar a página de documentação.',
+                    error: err.message
+                });
+            }
+        });
     }
-}
+};
 
