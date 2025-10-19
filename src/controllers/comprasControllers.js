@@ -5,35 +5,80 @@ module.exports = {
     async searchComprasAllCod(req, res){
         try {
             const result = await knex('compras').orderBy('codcomp');
-            if(result.length != 0 ){
-                return res.status(200).send(result);
-            }else{
-                return res.status(500).send(
-                    {msg:'Tabela vazia, nenhum registro encontrado!!'}
-                );
+            if(result.length > 0){
+                return res.status(200).send({
+                    msg: 'Compras encontradas com sucesso',
+                    dados: result
+                });
+            } else {
+                // Quando não há registros, é mais apropriado retornar 204 (No Content) ou 200 com array vazio
+                return res.status(200).send({
+                    msg: 'Nenhuma compra encontrada',
+                    dados: []
+                });
             }
         } catch (error) {
-            return res.status(500).send(
-                {msg: 'Error ao buscas compras', error: error.message}
-            );
+            console.error('Erro ao buscar compras:', error);
+            return res.status(500).send({
+                msg: 'Erro interno ao buscar compras',
+                error: error.message
+            });
         }
     },
     async createCompras (req, res){
-        const { codcli, codpro, qtda, preco  } = req.body;
-        
-        const resultcli = await knex('clientes').where({codcli});
-        if (resultcli.length === 0 ){
-              return res.status(200).send( {msg: 'Error cliente não cadastrado'});
-        }else{
-            const resultPro = await knex('produtos').where({codpro});
-            if(resultPro.length === 0){
-                return res.status(200).send( {msg: 'Error produto não cadastrado'});
+        try {
+            const { codcli, codpro, qtda, preco } = req.body;
+            
+            // Validação dos campos obrigatórios
+            if (!codcli || !codpro || !qtda || !preco) {
+                return res.status(400).send({
+                    msg: 'Todos os campos são obrigatórios: codcli, codpro, qtda, preco'
+                });
             }
-        }
-        await knex('compras')
-            .insert({codcli, codpro, qtda, preco});
-        return res.status(201).send({codcli, codpro, qtda, preco});
 
+            // Verifica se o cliente existe
+            const resultcli = await knex('clientes').where({codcli});
+            if (resultcli.length === 0) {
+                return res.status(404).send({
+                    msg: 'Cliente não encontrado',
+                    codcli
+                });
+            }
+
+            // Verifica se o produto existe
+            const resultPro = await knex('produtos').where({codpro});
+            if (resultPro.length === 0) {
+                return res.status(404).send({
+                    msg: 'Produto não encontrado',
+                    codpro
+                });
+            }
+
+            // Insere a nova compra
+            await knex('compras').insert({
+                codcli,
+                codpro,
+                qtda,
+                preco
+            });
+
+            return res.status(201).send({
+                msg: 'Compra registrada com sucesso',
+                dados: {
+                    codcli,
+                    codpro,
+                    qtda,
+                    preco
+                }
+            });
+
+        } catch (error) {
+            console.error('Erro ao registrar compra:', error);
+            return res.status(500).send({
+                msg: 'Erro interno ao processar a compra',
+                error: error.message
+            });
+        }
     }
 
 

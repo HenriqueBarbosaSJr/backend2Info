@@ -147,7 +147,11 @@
     <div class="endpoint">
         <h4><span class="method get">GET</span> /fornecedorcod</h4>
         <p>Retorna todos os fornecedores cadastrados, ordenados pelo código.</p>
-        <p><strong>Resposta (Sucesso 200):</strong></p>
+        <p><strong>Status Codes:</strong></p>
+        <ul>
+            <li>200: Sucesso - Retorna a lista de fornecedores</li>
+        </ul>
+        <p><strong>Exemplo de Resposta (200):</strong></p>
         <pre>[
     {
         "codfor": 1,
@@ -163,6 +167,21 @@
     <div class="endpoint">
         <h4><span class="method get">GET</span> /fornecedornome</h4>
         <p>Retorna todos os fornecedores cadastrados, ordenados pelo nome.</p>
+        <p><strong>Status Codes:</strong></p>
+        <ul>
+            <li>200: Sucesso - Retorna a lista de fornecedores ordenada por nome</li>
+        </ul>
+        <p><strong>Exemplo de Resposta (200):</strong></p>
+        <pre>[
+    {
+        "codfor": 2,
+        "nome": "Alfa Suprimentos",
+        "email": "alfa@suprimentos.com",
+        "uf": "SP",
+        "level": 1
+    },
+    ...
+]</pre>
     </div>
 
     <div class="endpoint">
@@ -172,6 +191,26 @@
         <ul>
             <li><code>nome</code> (string): Termo a ser buscado no nome do fornecedor.</li>
         </ul>
+        <p><strong>Status Codes:</strong></p>
+        <ul>
+            <li>200: Sucesso - Retorna a lista de fornecedores que correspondem ao termo</li>
+            <li>400: Erro - Nome não fornecido</li>
+            <li>500: Erro - Erro ao buscar fornecedor por nome</li>
+        </ul>
+        <p><strong>Exemplo de Resposta (200):</strong></p>
+        <pre>[
+    {
+        "codfor": 1,
+        "nome": "Fornecedor ABC",
+        "email": "abc@fornecedor.com",
+        "uf": "SP",
+        "level": 1
+    }
+]</pre>
+        <p><strong>Exemplo de Erro (400):</strong></p>
+        <pre>{
+    "msg": "Nome é obrigatório para o filtro."
+}</pre>
     </div>
 
     <div class="endpoint">
@@ -185,7 +224,11 @@
     "password": "senhaSegura",
     "level": 1
 }</pre>
-        <p><strong>Resposta (Sucesso 201):</strong></p>
+        <p><strong>Status Codes:</strong></p>
+        <ul>
+            <li>201: Sucesso - Fornecedor criado com sucesso</li>
+        </ul>
+        <p><strong>Exemplo de Resposta (201):</strong></p>
         <pre>{
     "nome": "Novo Fornecedor",
     "email": "novo@fornecedor.com",
@@ -210,6 +253,14 @@
     "password": "novaSenha",
     "level": 2
 }</pre>
+        <p><strong>Status Codes:</strong></p>
+        <ul>
+            <li>201: Sucesso - Fornecedor atualizado com sucesso</li>
+        </ul>
+        <p><strong>Exemplo de Resposta (201):</strong></p>
+        <pre>{
+    "msg": "Atualização efetuada com sucesso !!!!"
+}</pre>
     </div>
 
     <div class="endpoint">
@@ -219,6 +270,21 @@
         <ul>
             <li><code>codfor</code> (integer): Código do fornecedor a ser excluído.</li>
         </ul>
+        <p><strong>Status Codes:</strong></p>
+        <ul>
+            <li>200: Sucesso - Fornecedor excluído com sucesso</li>
+            <li>400: Erro - Código do fornecedor não fornecido</li>
+            <li>404: Erro - Fornecedor não encontrado</li>
+            <li>500: Erro - Erro ao excluir fornecedor</li>
+        </ul>
+        <p><strong>Exemplo de Resposta (200):</strong></p>
+        <pre>{
+    "msg": "Exclusão efetuada com sucesso!"
+}</pre>
+        <p><strong>Exemplo de Erro (404):</strong></p>
+        <pre>{
+    "msg": "Fornecedor não encontrado"
+}</pre>
     </div>
 
     <!-- Seção Produtos -->
@@ -226,16 +292,28 @@
     <div class="endpoint">
         <h4><span class="method get">GET</span> /produtos</h4>
         <p>Retorna todos os produtos cadastrados, ordenados pelo código.</p>
-        <p><strong>Resposta (Sucesso 200):</strong></p>
+        <p><strong>Status Codes:</strong></p>
+        <ul>
+            <li>200: Sucesso - Lista de produtos retornada</li>
+            <li>500: Erro - Tabela vazia ou erro ao buscar produtos</li>
+        </ul>
+        <p><strong>Exemplo de Resposta (200):</strong></p>
         <pre>[
     {
         "codpro": 1,
-        "descricao": "Produto Exemplo",
+        "nome": "Produto Exemplo",
+        "descri": "Descrição detalhada do produto",
+        "fabricante": "Fabricante X",
+        "qtda": 100,
         "preco": 99.99,
-        "qtda": 100
+        "custo": 50.00
     },
     ...
 ]</pre>
+        <p><strong>Exemplo de Erro (500):</strong></p>
+        <pre>{
+    "msg": "Tabela vazia, nenhum registro encontrado!!"
+}</pre>
     </div>
 
     <!-- Seção Clientes -->
@@ -243,15 +321,68 @@
     <div class="endpoint">
         <h4><span class="method get">GET</span> /clientes</h4>
         <p>Retorna todos os clientes cadastrados, ordenados pelo código.</p>
-        <p><strong>Resposta (Sucesso 200):</strong></p>
-        <pre>[
-    {
-        "codcli": 1,
-        "nome": "Cliente Exemplo",
-        "endereco": "Rua Exemplo, 123"
-    },
-    ...
-]</pre>
+        <p><strong>Status Codes:</strong></p>
+        <ul>
+            <li>200: Sucesso - Lista de clientes retornada</li>
+            <li>500: Erro - Erro interno ao buscar clientes</li>
+        </ul>
+        <p><strong>Exemplo de Resposta (200):</strong></p>
+        <pre>{
+    "msg": "Clientes encontrados com sucesso",
+    "dados": [
+        {
+            "codcli": 1,
+            "nome": "Cliente Exemplo",
+            "email": "cliente@exemplo.com",
+            "uf": "SP",
+            "level": 1,
+            "createdat": "2025-10-18T10:00:00Z"
+        },
+        ...
+    ]
+}</pre>
+        <p><strong>Exemplo de Resposta (200 - Sem dados):</strong></p>
+        <pre>{
+    "msg": "Nenhum cliente encontrado",
+    "dados": []
+}</pre>
+    </div>
+
+    <div class="endpoint">
+        <h4><span class="method post">POST</span> /clientes</h4>
+        <p>Cadastra um novo cliente.</p>
+        <p><strong>Corpo da Requisição (JSON):</strong></p>
+        <pre>{
+    "nome": "Novo Cliente",
+    "email": "cliente@email.com",
+    "uf": "SP",
+    "password": "senhaSegura",
+    "level": 1
+}</pre>
+        <p><strong>Status Codes:</strong></p>
+        <ul>
+            <li>201: Sucesso - Cliente criado com sucesso</li>
+            <li>400: Erro - Email já cadastrado ou erro na requisição</li>
+            <li>500: Erro - Erro interno ao criar cliente</li>
+        </ul>
+        <p><strong>Exemplo de Sucesso (201):</strong></p>
+        <pre>{
+    "msg": "Cliente criado com sucesso",
+    "dados": {
+        "nome": "Novo Cliente",
+        "email": "cliente@email.com",
+        "uf": "SP",
+        "level": 1
+    }
+}</pre>
+        <p><strong>Exemplo de Erro (400):</strong></p>
+        <pre>{
+    "erro": "Email já cadastrado!"
+}</pre>
+        <p><strong>Exemplo de Erro (500):</strong></p>
+        <pre>{
+    "error": "Erro interno ao criar cliente"
+}</pre>
     </div>
 
     <!-- Seção Compras -->
@@ -259,6 +390,36 @@
     <div class="endpoint">
         <h4><span class="method get">GET</span> /compras</h4>
         <p>Retorna todas as compras registradas, ordenadas pelo código da compra.</p>
+        <p><strong>Status Codes:</strong></p>
+        <ul>
+            <li>200: Sucesso - Lista de compras retornada (mesmo que vazia)</li>
+            <li>500: Erro - Erro interno ao buscar compras</li>
+        </ul>
+        <p><strong>Exemplo de Resposta (200 - Com dados):</strong></p>
+        <pre>{
+    "msg": "Compras encontradas com sucesso",
+    "dados": [
+        {
+            "codcomp": 1,
+            "codcli": 1,
+            "codpro": 1,
+            "qtda": 2,
+            "preco": 99.99,
+            "datacomp": "2025-10-18T10:00:00Z"
+        },
+        ...
+    ]
+}</pre>
+        <p><strong>Exemplo de Resposta (200 - Sem dados):</strong></p>
+        <pre>{
+    "msg": "Nenhuma compra encontrada",
+    "dados": []
+}</pre>
+        <p><strong>Exemplo de Erro (500):</strong></p>
+        <pre>{
+    "msg": "Erro interno ao buscar compras",
+    "error": "detalhes do erro"
+}</pre>
     </div>
 
     <div class="endpoint">
@@ -278,18 +439,43 @@
             <li><code>qtda</code> (integer): Quantidade comprada.</li>
             <li><code>preco</code> (decimal/float): Preço unitário no momento da compra.</li>
         </ul>
-        <p><strong>Resposta (Sucesso 201):</strong></p>
-        <pre>{
-    "codcli": 1,
-    "codpro": 1,
-    "qtda": 2,
-    "preco": 50.00
-}</pre>
-        <p><strong>Respostas de Erro:</strong></p>
+        <p><strong>Status Codes:</strong></p>
         <ul>
-            <li>Status 200 com <code>{ "msg": "Error cliente não cadastrado" }</code> se o <code>codcli</code> não existir.</li>
-            <li>Status 200 com <code>{ "msg": "Error produto não cadastrado" }</code> se o <code>codpro</code> não existir.</li>
+            <li>201: Sucesso - Compra registrada com sucesso</li>
+            <li>400: Erro - Campos obrigatórios não fornecidos</li>
+            <li>404: Erro - Cliente ou produto não encontrado</li>
+            <li>500: Erro - Erro interno ao processar a compra</li>
         </ul>
+        <p><strong>Exemplo de Resposta (201):</strong></p>
+        <pre>{
+    "msg": "Compra registrada com sucesso",
+    "dados": {
+        "codcli": 1,
+        "codpro": 1,
+        "qtda": 2,
+        "preco": 50.00
+    }
+}</pre>
+        <p><strong>Exemplos de Erro:</strong></p>
+        <p>400 - Campos obrigatórios:</p>
+        <pre>{
+    "msg": "Todos os campos são obrigatórios: codcli, codpro, qtda, preco"
+}</pre>
+        <p>404 - Cliente não encontrado:</p>
+        <pre>{
+    "msg": "Cliente não encontrado",
+    "codcli": 1
+}</pre>
+        <p>404 - Produto não encontrado:</p>
+        <pre>{
+    "msg": "Produto não encontrado",
+    "codpro": 1
+}</pre>
+        <p>500 - Erro interno:</p>
+        <pre>{
+    "msg": "Erro interno ao processar a compra",
+    "error": "detalhes do erro"
+}</pre>
     </div>
 
 </body>
