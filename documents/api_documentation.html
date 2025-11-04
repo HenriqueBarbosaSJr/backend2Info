@@ -165,6 +165,38 @@
     </div>
 
     <div class="endpoint">
+        <h4><span class="method get">GET</span> /fornecedor/:codfor</h4>
+         <div style="display: flex; align-items: center; gap: 10px;">
+            <h4 style="margin: 0;">New endpoint</h4>
+            <img src="/images/newimage.gif" alt="" width="120" height="120">
+         </div>
+        <p>Retorna os dados de um fornecedor específico pelo seu código.</p>
+        <p><strong>Parâmetros na URL:</strong></p>
+        <ul>
+            <li><code>codfor</code> (integer): Código do fornecedor a ser consultado.</li>
+        </ul>
+        <p><strong>Status Codes:</strong></p>
+        <ul>
+            <li>200: Sucesso - Retorna os dados do fornecedor</li>
+            <li>404: Erro - Fornecedor não encontrado</li>
+            <li>500: Erro - Erro ao buscar fornecedor</li>
+        </ul>
+        <p><strong>Exemplo de Resposta (200):</strong></p>
+        <pre>{
+    "codfor": 1,
+    "nome": "Fornecedor A",
+    "email": "contato@fornecedora.com",
+    "uf": "SP",
+    "level": 1,
+    "createdat": "2025-11-03T10:00:00.000Z"
+}</pre>
+        <p><strong>Exemplo de Erro (404):</strong></p>
+        <pre>{
+    "msg": "Fornecedor não encontrado"
+}</pre>
+    </div>
+
+    <div class="endpoint">
         <h4><span class="method get">GET</span> /fornecedornome</h4>
         <p>Retorna todos os fornecedores cadastrados, ordenados pelo nome.</p>
         <p><strong>Status Codes:</strong></p>
@@ -298,6 +330,36 @@
             <li>500: Erro - Tabela vazia ou erro ao buscar produtos</li>
         </ul>
         <p><strong>Exemplo de Resposta (200):</strong></p>
+    </div>
+
+    <div class="endpoint">
+        <h4><span class="method get">GET</span> /produtos/:codpro</h4>
+        <p>Retorna as informações de um produto específico pelo seu código.</p>
+        <p><strong>Parâmetros na URL:</strong></p>
+        <ul>
+            <li><code>codpro</code> (integer): Código do produto a ser consultado.</li>
+        </ul>
+        <p><strong>Status Codes:</strong></p>
+        <ul>
+            <li>200: Sucesso - Retorna os dados do produto</li>
+            <li>404: Erro - Produto não encontrado</li>
+            <li>500: Erro - Erro ao buscar produto</li>
+        </ul>
+        <p><strong>Exemplo de Resposta (200):</strong></p>
+        <pre>{
+    "codpro": 1,
+    "nome": "Produto Exemplo",
+    "descri": "Descrição do produto",
+    "fabricante": "Fabricante XYZ",
+    "qtda": 100,
+    "preco": 29.90,
+    "custo": 15.50,
+    "data": "2025-11-03T10:00:00.000Z"
+}</pre>
+        <p><strong>Exemplo de Erro (404):</strong></p>
+        <pre>{
+    "msg": "Produto não encontrado"
+}</pre>
         <pre>[
     {
         "codpro": 1,

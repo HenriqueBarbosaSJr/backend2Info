@@ -12,6 +12,7 @@ routes.get('/',raizControllers.raiz);
 routes.get('/fornecedorcod', fornecControllers.searchFornecedorAllCod);
 routes.get('/fornecedornome', fornecControllers.searchFornecedorAllNome);
 routes.get('/fornecedorByNome/:nome', fornecControllers.searchFornecedorByNome);
+routes.get('/fornecedorcodfor/:codfor', fornecControllers.searchFornecedorCod);
 routes.post('/fornecedor',fornecControllers.create);
 routes.put('/fornecedor/:codfor',fornecControllers.updatefor);
 routes.delete('/fornecedor/:codfor', fornecControllers.deleteFor);

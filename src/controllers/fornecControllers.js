@@ -31,6 +31,23 @@ module.exports ={
                 );
             }
     },
+        async searchFornecedorCod(req, res){
+
+            try {
+                    const { codfor } = req.params;
+                    if (!codfor){
+                        return res.status(400).send({ msg: 'Código é obrigatório para o filtro.' });
+                    }
+                    const result = await knex('fornecedor')
+                        .where('codfor', codfor);
+                    return res.status(200).send(result);
+                
+            } catch (error) {
+                return res.status(500).send(
+                    { msg: 'Erro ao buscar fornecedor por código.', error: error.message }
+                );
+            }
+    },
 
     async create(req, res){
         const { nome  } = req.body;
